@@ -31,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView dust_textview;
 
     private MyLocationFinder locationFinder;
+    private DustAPI dustapi;
+
+    private String myaddress = "";
 
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     private String[] REQUIRED_PERMISSIONS = {
@@ -52,10 +55,6 @@ public class MainActivity extends AppCompatActivity {
 
         location_btn = findViewById(R.id.button_loc);
         location_textview = findViewById(R.id.textView_loc);
-
-        dust_btn = findViewById(R.id.button_dust);
-        dust_textview = findViewById(R.id.textView_dust);
-
         location_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,9 +64,23 @@ public class MainActivity extends AppCompatActivity {
 
                 String address = getCurrentAddress(latitude, longitude);
                 location_textview.setText(address);
+                myaddress = address;
 
                 Toast.makeText(MainActivity.this, "위도: "+latitude+
                         "\n경도: "+longitude, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        dust_btn = findViewById(R.id.button_dust);
+        dust_textview = findViewById(R.id.textView_dust);
+        dust_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dustapi = new DustAPI();
+                String dustinfo = dustapi.get_dust_info(myaddress);
+                dust_textview.setText(dustinfo);
+
+                Toast.makeText(MainActivity.this, "dustinfo:\n"+dustinfo, Toast.LENGTH_LONG).show();
             }
         });
     }
