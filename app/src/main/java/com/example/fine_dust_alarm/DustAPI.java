@@ -164,19 +164,9 @@ public class DustAPI {
     }
 
     public String get_location_name(String address){
-        String[] split_str = address.split(",");
-        String target_location = split_str[1].trim();
-        switch(target_location){
-            case "Jung-gu":
-                return "중구";
-            case "Jongno-gu":
-                return "종로구";
-            case "Yongsan-gu":
-                return "용산구";
-            case "Seongdong-gu":
-                return "성동구";
-            default:
-                return "중구";
-        }
+        String[] split_str = address.split(" ");
+        String target_location = split_str[2].trim();
+        Log.d("###",target_location);
+        return target_location;
     }
 }
